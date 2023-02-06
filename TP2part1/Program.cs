@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<SeriesDBContext>(options =>
-  options.UseNpgsql(builder.Configuration.GetConnectionString("SeriesDBContext")));
+  options.UseNpgsql(builder.Configuration.GetConnectionString("SeriesDbContextRemote")));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
