@@ -20,8 +20,16 @@ namespace TP2part1.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Get a single currency.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="id">The id of the currency</param>
+        /// <response code="200">When the currency id is found</response>
+        /// <response code="404 Not Found">When the currency id is not found</response>
         // GET: api/Series
         [HttpGet]
+
         public async Task<ActionResult<IEnumerable<Serie>>> GetSeries()
         {
             return await _context.Series.ToListAsync();
@@ -29,6 +37,7 @@ namespace TP2part1.Controllers
 
         // GET: api/Series/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Serie>> GetSerie(int id)
         {
             var serie = await _context.Series.FindAsync(id);
@@ -41,9 +50,22 @@ namespace TP2part1.Controllers
             return serie;
         }
 
+        /// <summary>
+        /// Get a single currency.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="devise">The devise of the currency</param>
+        /// <param id="id">The devise of the currency</param>
+        /// <response code="204 No Content">currency updated in the list</response>
+        /// <response code="400 Bad Request">incorrect type of information</response>
+        /// <response code="400 Bad Request">bad id in get</response>
+        /// // <response code="404 Not Found">unknown id</response>
         // PUT: api/Series/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutSerie(int id, Serie serie)
         {
             if (id != serie.Serieid)
@@ -72,9 +94,18 @@ namespace TP2part1.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Get a single currency.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="devise">The devise of the currency</param>
+        /// <response code="201 Created">valid currency, new record returned</response>
+        /// <response code="400 Bad Request">when the nameDevise is not filled in</response>
         // POST: api/Series
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+
         public async Task<ActionResult<Serie>> PostSerie(Serie serie)
         {
             _context.Series.Add(serie);
@@ -83,8 +114,19 @@ namespace TP2part1.Controllers
             return CreatedAtAction("GetSerie", new { id = serie.Serieid }, serie);
         }
 
+
+        /// <summary>
+        /// Get a single currency.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="devise">The devise of the currency</param>
+        /// <param id="id">The devise of the currency</param>
+        /// <response code="204 No Content">currency updated in the list</response>
+        /// <response code="404 Not Found">incorrect type of information</response>
         // DELETE: api/Series/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteSerie(int id)
         {
             var serie = await _context.Series.FindAsync(id);
